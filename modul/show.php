@@ -2,29 +2,12 @@
 <?php
 	$connect= pg_connect("host=localhost port=5432 dbname=test_c user=postgres password=postgres");
 	
-	if(isset($_POST['id']) and isset($_POST['type']))
+	if(isset($_POST['id']))
 	{
- 
-		if($_POST['id']=='')
-		{
-
-		}
-		else
-		{
-			$id =$_POST['id'];	
-			$type =$_POST['type'];
-
-			switch ($type) 
-			{
-
-				case 'true':
-					$type = 1;
-					break;
-				
-				case 'false':
-					$type = 0;
-					break;
-			}
+ 		
+		
+		$id =$_POST['id'];	
+			
 			$result2 = pg_query($connect, "SELECT  *FROM departments WHERE id_fac='$id'");
 			print'<h4>Выберите специальность</h4><br>';
 			print'<select id="id_spec">
@@ -55,7 +38,7 @@
 			
    			
  
-		}
+		
 
 
 	}
@@ -152,24 +135,37 @@
 	
 
 		
-		if(isset($_POST['id_group']))
+		if(isset($_POST['id_group']) AND isset($_POST['type']))
 
 	{	
+		 $type =$_POST['type'];
+
+			switch ($type) 
+			{
+
+				case 'true':
+					$type = 1;
+					break;
+				
+				case 'false':
+					$type = 0;
+					break;
+			}
 				//print''.$row2[1].' <a href="load_work.php?id_spec='.$row2[0].'" target="_blank">Выбрать</a>	';
 
 				  
 			switch ($_POST['id_group']) 
 			{
 				case '1':
-					print'<h3><a href="load_work.php?open=1">Добавить</a></h3>';
+					print'<h3><a href="load_work.php?type='.$type.'">Добавить</a></h3>';
 					break;
 				
 				case '2':
-					print'<h3><a href="load_work.php?open=1">Добавить</a></h3>';
+					print'<h3><a href="load_work.php?type='.$type.'">Добавить</a></h3>';
 					break;
 
 				case '3':
-				print'<h3><a href="load_work.php?open=1">Добавить</a></h3>';
+				print'<h3><a href="load_work.php?type='.$type.'">Добавить</a></h3>';
 				break;
 			}
    			

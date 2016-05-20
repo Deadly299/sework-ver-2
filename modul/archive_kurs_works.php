@@ -1,6 +1,5 @@
+<!DOCTYPE>
 
-<!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="utf-8">
   
@@ -8,11 +7,14 @@
   <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
 
-  <script type="text/javascript" src="../js/jquery-1.6.4.min.js"></script>
+  <script type="text/javascript" src="../js/jquery-1.12.1.js"></script>
   <link href="../bootstrap/css/dashboard.css" rel="stylesheet">
+
+  <link href="../sort/themes/blue/style.css" rel="stylesheet">
+  <script type="text/javascript" src="../sort/jquery.tablesorter.js"></script>
+
 </head>
 
-<body>
 <?php include("security/control.php");?>
 
   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -29,10 +31,9 @@
       <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav navbar-right">
 
-          <li><a href="#">Профиль</a></li>
-          <li><a href="#">Настроки</a></li>
+          <li><a href="setting_user.php">Профиль</a></li>
           <li><a href="authorization.php">
-          <?php print '<b style="color:#6D5FE7;">'.$_SESSION['user'].'</b>&nbsp' ; ?>Выйти
+          <?php print '<b style="color:#5FA6E7;">'.$_SESSION['user'][1].'</b>&nbsp' ; ?>Выйти
           </a></li>
           <li><a href="#">Help</a></li>
         </ul>
@@ -45,25 +46,21 @@
   <div class="container-fluid">
     <div class="row">
        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li><h4>&nbspУправление работами</h4></li>
-            <li><a href="adminka.php">Добавить работу</a></li>
-            <li><a href="archive_vkr_works.php">Архив дипломных работ</a></li>
-            <li class="active"><a href="archive_kurs_works.php">Архив курсовых работ</a></li>
-            
-          </ul>
-                <?php 
-             
-              if ($_SESSION['user']=='Admin')
-              {
-                print'<ul class="nav nav-sidebar">
-                <li><h4>&nbspУправление пользователями</h4></li>
-                <li><a href="create_users.php">Добавить пользователя</a></li>
-                <li><a href="list_users.php">Список пользователей</a></li>
-              </ul>';
-              }
 
-               ?>
+        <ul class="nav nav-sidebar">
+          <li><h4>&nbspУправление работами</h4></li>
+          <li><a href="adminka.php">Добавить работу</a></li>
+          <li><a href="archive_vkr_works.php">Архив дипломных работ</a></li>
+          <li class="active"><a href="archive_kurs_works.php">Архив курсовых работ</a></li>';    
+        </ul>
+        
+        <ul class="nav nav-sidebar">
+          <li><h4>&nbspУправление пользователями</h4></li>
+          <li><a href="create_users.php">Добавить пользователя</a></li>
+          <li><a href="list_users.php">Список пользователей</a></li>
+        </ul>
+           
+                
              
              
         </div>
@@ -74,7 +71,16 @@
 
 
           <div class="row placeholders ">
+    <form action="index.php" method="GET" >
+              <input type="text" name="page" value="1" hidden="true">
+              <input type="text" name="search_method" value="1" hidden="true">
 
+        <input type="text" name="search" class="form-control-serch" placeholder="Поиск....." autocomplete="off">
+      <button type="submit" class="search_button"><span class="glyphicon glyphicon-search"></span> Найти</button>
+    <div class="search_area" >
+        <div id="search_advice_wrapper" ></div>
+      </div>
+        </form>
 <?php 
 if(isset($_POST['insert']))
   {
@@ -249,57 +255,83 @@ print '
 
           
 
+<body>
+
 <!-- ///////////////////////////////////////////////////////////////////////////////////////// -->
-<table class="table table-striped">
+<!-- <table class="table table-striped"> -->
+<table id="myTable" class="tablesorter">
+
 <?php
-  $arrayRow = array('0' => 'ID пользователя','1' => 'Название Шаблона', '2' => 'Тип Шаблона',
-    '3' => 'Для факультета', '4' => 'Дата создания', '5' => 'Дата отменны'  );
+  $arrayRow = array(
+    '0' => 'ID-работы',
+    '1' => 'Название работы',
+    '2' => 'Автор работы',
+    '3' => 'Группа', 
+    '4' => 'Дата проверки',
+    '5' => 'Факультет', 
+    '6' => 'Код ОКСО', 
+    '7' => 'Квалификация',
+    '8' => 'Руководитель',
+    '9' => 'Зав. Кафедры',
+    '10' => 'Нормаконтролер',
+    '11' => 'Номер шаблона работы',
+    '12' => 'Консультанты', 
+    '13' => 'Пол', 
+    '14' => 'Отделение' 
+  );
   $connect= pg_connect("host=localhost port=5432 dbname=test_c user=postgres password=postgres");
 
-  $result_templates = pg_query($connect,"SELECT  id,name_tem,type,id_fac,date_create,not_valid FROM  templates ORDER BY id ");
-  
-    for ($b=0; $b <=5 ; $b++) 
+  $connect= pg_connect("host=localhost port=5432 dbname=test_c user=postgres password=postgres");
+
+  $result_works = pg_query($connect,"SELECT  
+
+id,
+subject,
+id_students, 
+id_ped_composition,
+date_create
+
+
+ FROM  cours_works ORDER BY id ");
+  print'<thead>';
+  print '<tr>';
+    for ($b=0; $b <=4 ; $b++) 
     { 
       
-       print '<td>'.trim($arrayRow[$b]).'</td>';
+       print '<th style="background-color: #685858;padding-right:18px;" align="center">'.trim($arrayRow[$b]).'</th>';
     }
+ 
     //print '<td> Добавить факультет</td>';
-     print '<td  colspan="2"> <a href="create_template.php"><span class="glyphicon glyphicon-plus">Добавить</a></td>';
-    print '<td  colspan="2"> Отменить: Да/Нет</td>';
-  while ($mass_templates = pg_fetch_row($result_templates))
+     print '<td  colspan="2"style="background-color: #685858;" align="center"> <a href="create_template.php"><span class="glyphicon glyphicon-plus">Добавить</a></td>';
+  
+   print '</tr>';
+  print'</thead>';
+   print'<tbody>';
+  while ($mass_templates = pg_fetch_row($result_works))
    {  
-       $result_fac = pg_query($connect,"SELECT  id,abbreviation FROM  faculties WHERE id='$mass_templates[3]'");
+       $result_fac = pg_query($connect,"SELECT  executor FROM  vkr_works WHERE id='$mass_templates[2]'");
        $mass_fac = pg_fetch_row($result_fac);
+      
       print '<tr>';
-      for ($i=0; $i <= 5 ; $i++) 
+      for ($i=0; $i <= 4 ; $i++) 
       { 
-        if($i==3)
-        {
-           print '<td>'.trim($mass_fac[1]).'</td>';
-           continue;
-        }
+        
         if($i==2)
         {
-           if($mass_templates[2]=='0')
-           {
-              print '<td>Курсовая</td>';
-              continue;
-           }else 
-            {
-              print '<td>ВКР</td>';
-              continue;
-            }
+           print '<td>'.trim($mass_fac[0]).'</td>';
+           continue;
         }
         print '<td>'.trim($mass_templates[$i]).'</td>';
       }
       print '<td> <a href="edit_template.php?edit='.$mass_templates[0].'"><span class="glyphicon glyphicon-pencil  "></a></td>';
       print '<td> <a href="edit_template.php?delete='.$mass_templates[0].'"><span class="glyphicon glyphicon-remove"></a></td>';
-      print '<td> <a href="edit_template.php?up='.$mass_templates[0].'"><span class="glyphicon glyphicon-thumbs-up"></a></td>';
-      print '<td> <a href="edit_template.php?down='.$mass_templates[0].'"><span class="glyphicon glyphicon-thumbs-down"></a></td>';
+     
 
   
       print '</tr>';
+      
    }  
+    print'</tbody>';
  ?>  
 </table>
  
@@ -314,8 +346,6 @@ print '
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     
-    <script src="../docs.min.js"></script>
   </body>
 </html>

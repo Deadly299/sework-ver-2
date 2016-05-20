@@ -1,7 +1,7 @@
 var suggest_count = 0;
 var input_initial_value = '';
 var suggest_selected = 0;
- 
+
 $(window).load(function(){
     // читаем ввод с клавиатуры
     $(".form-control-serch").keyup(function(I){
@@ -17,7 +17,7 @@ $(window).load(function(){
             default:
                 // производим поиск только при вводе более 2х символов
                 if($(this).val().length>2){
- 
+                     
                     input_initial_value = $(this).val();
                     // производим AJAX запрос к /ajax/ajax.php, передаем ему GET query, в который мы помещаем наш запрос
                     $.get("search.php", { "query":$(this).val() },function(data){

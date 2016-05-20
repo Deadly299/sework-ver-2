@@ -5,6 +5,7 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
   padding-top: 50px;
+
 }
 
 
@@ -46,6 +47,9 @@ body {
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
     background-color: #f5f5f5;
     border-right: 1px solid #eee;
+       background:url(../../Photo/fone4.jpg);
+    opacity: 0.6;
+
   }
 }
 
@@ -54,6 +58,11 @@ body {
   margin-right: -21px; /* 20px padding + 1px border */
   margin-bottom: 10px;
   margin-left: -20px;
+
+}
+.nav-sidebar h4{
+  padding-bottom: 3px;
+border-bottom: 1px solid #2D1111;
 }
 .nav-sidebar > li > a {
   padding-right: 20px;
@@ -62,8 +71,8 @@ body {
 .nav-sidebar > .active > a,
 .nav-sidebar > .active > a:hover,
 .nav-sidebar > .active > a:focus {
-  color: #fff;
-  background-color: #428bca;
+  color: #F1EFF1;
+  background-color: #1F2931;
 }
 
 
@@ -92,6 +101,15 @@ body {
 .placeholders {
   margin-bottom: 30px;
   text-align: center;
+}
+
+.placeholders select{
+  height: 30px; 
+ 
+}
+.placeholders label{
+  color:#A9A9A9;
+  
 }
 .placeholders h4 {
   margin-bottom: 0;

@@ -42,7 +42,7 @@ $(document).ready(function(){
 		$.ajax({
 			type: "POST",
 			url: "show.php",
-			data: "id_group="+$("#id_group").val(),
+			data: "id_group="+$("#id_group").val()+"&type="+$("#radio-inline").prop("checked"),
 			success: function(html)
 			{
 				$("#content4").html(html);
@@ -74,6 +74,5 @@ $(document).ready(function(){
  
 
 	});
-
 
 

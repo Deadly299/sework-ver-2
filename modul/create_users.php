@@ -1,15 +1,19 @@
-
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE>
 <head>
   <meta charset="utf-8">
   
   <title>Добавление пользователей</title>
-  <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
-
-  <script type="text/javascript" src="../js/jquery-1.6.4.min.js"></script>
   <link href="../bootstrap/css/dashboard.css" rel="stylesheet">
+  <script type="text/javascript" src="../js/jquery-1.12.1.js"></script>
+  <script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
+  <script src="../js/jquery-ui.js"></script>
+  <script src="../js/jquery.ui.datepicker-ru.js"></script>
+  
+  <link rel="stylesheet" href="../css/jquery-ui.css">
+  <script src="../js/modul/search.js"></script> 
+
+
 </head>
 
 <body>
@@ -30,9 +34,8 @@
               <ul class="nav navbar-nav navbar-right">
 
           <li><a href="#">Профиль</a></li>
-          <li><a href="#">Настроки</a></li>
           <li><a href="authorization.php"><?php  
-  print '<b style="color:#6D5FE7;">'.$_SESSION['user'].'</b>&nbsp' ; ?>Выйти
+  print '<b style="color:#5FA6E7;">'.$_SESSION['user'][1].'</b>&nbsp' ; ?>Выйти
           </a></li>
           <li><a href="#">Help</a></li>
         </ul>
@@ -40,29 +43,21 @@
       </div>
     </div>
   </div>
-
   <div class="container-fluid">
     <div class="row">
        <div class="col-sm-3 col-md-2 sidebar">
         <ul class="nav nav-sidebar">
           <li><h4>&nbspУправление работами</h4></li>
-            <li><a href="adminka.php">Добавить работу</a></li>
-            <li><a href="archive_vkr_works.php">Архив дипломных работ</a></li>
-            <li><a href="archive_kurs_works.php">Архив курсовых работ</a></li>
-            
-          </ul>
-           <?php 
-             
-              if ($_SESSION['user']=='Admin')
-              {
-                print'<ul class="nav nav-sidebar">
-                <li><h4>&nbspУправление пользователями</h4></li>
-                <li class="active"><a href="create_users.php">Добавить пользователя</a></li>
-                <li><a href="list_users.php">Список пользователей</a></li>
-              </ul>';
-              }
-
-               ?>
+          <li><a href="adminka.php">Добавить работу</a></li>
+          <li ><a href="archive_vkr_works.php">Архив дипломных работ</a></li>
+          <li><a href="archive_kurs_works.php">Архив курсовых работ</a></li>';    
+        </ul>
+        <ul class="nav nav-sidebar">
+          <li><h4>&nbspУправление пользователями</h4></li>
+          <li class="active"><a href="create_users.php">Добавить пользователя</a></li>
+          <li><a href="list_users.php">Список пользователей</a></li>
+        </ul>
+              
            
         </div>
 
@@ -160,12 +155,6 @@ if( $_POST['login'] !='' and
     </div>
   </div>
   <div class="form-group">
-    <label class="control-label col-xs-3">Дата рождения:</label>
-    <div class="col-xs-9">
-    <input type="date" name="date" class="form-control">
-    </div>
-  </div>
-  <div class="form-group">
     <label class="control-label col-xs-3" for="inputEmail">Email:</label>
     <div class="col-xs-9">
       <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email">
@@ -189,6 +178,12 @@ if( $_POST['login'] !='' and
       <input type="tel" name="phoneNumber"class="form-control" id="phoneNumber" placeholder="Введите номер телефона">
     </div>
   </div>
+  <div class="form-group" >
+    <label class="control-label col-xs-3">Дата рождения:</label>
+    <div class="col-xs-9"  align="left">
+    <input type="text" name="date" id="datepicker-d-1" placeholder="Дата" autocomplete="off">
+    </div>
+  </div>
   
 
   <br />
@@ -204,13 +199,5 @@ if( $_POST['login'] !='' and
         </div>
       </div>
     </div>
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    
-    <script src="../docs.min.js"></script>
   </body>
 </html>

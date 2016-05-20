@@ -15,10 +15,10 @@ include("../layaut/header.php");
 <h4 class="page-header" align="center">Выберете тип работы и факультет</h4>
 <div aligin="center" >
                           <label class="checkbox-inline">
-                            <input type="radio" id="radio-inline"  name="office" checked="true"> - Дипломная работа 
+                            <input type="radio" id="radio-inline"  name="office" checked="true"> - Выпускная квалифицированная работа 
                           </label>
                           <label class="checkbox-inline">
-                            <input type="radio" id="radio-inline"  name="office" > - Курсовая работа 
+                            <input type="radio" id="radio-inline"  name="office" > - Курсовая работа(проект) 
                           </label>
                         </div><br>
  <div class="div_o">                      

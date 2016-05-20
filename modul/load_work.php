@@ -1,22 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE >
 <head>
 	<meta charset="utf-8">
 	<title>Добавление Работы</title>
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+
+	<link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="../bootstrap/css/dashboard.css" rel="stylesheet">
 
+
+
+ 
+  
 	<script type="text/javascript" src="../js/jquery-1.12.1.js"></script>
 	<script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
+	
+	<link rel="stylesheet" href="../css/jquery-ui.css">
 	<script src="../js/jquery-ui.js"></script>
 	<script src="../js/jquery.ui.datepicker-ru.js"></script>
 	
-	<link rel="stylesheet" href="../css/jquery-ui.css">
-	<script src="../js/modul/search.js"></script> >
+    <!-- <link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/themes/sunny/jquery-ui.css">
+    	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script> -->
+	
+	<script src="../js/modul/search.js"></script> 
+
 </head>
 
 <body>
-	
+	<?php include("security/control.php"); ?>
 	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -31,8 +41,9 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#">Профиль</a></li>
-					<li><a href="#">Настроки</a></li>
-					<li><a href="#">Выйти</a></li>
+					<li><a href="authorization.php">
+          <?php print '<b style="color:#5FA6E7;">'.$_SESSION['user'][1].'</b>&nbsp' ; ?>Выйти
+          </a></li>
 					<li><a href="#">Help</a></li>
 				</ul>
 			</div>
@@ -43,15 +54,36 @@
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				 <ul class="nav nav-sidebar">
-		          <li><h4>&nbspУправление работами</h4></li>
-		            <li class="active"><a href="adminka.php">Добавить работу</a></li>
-		            <li><a href="archive_vkr_works.php">Архив дипломных работ</a></li>
-		            <li><a href="archive_kurs_works.php">Архив курсовых работ</a></li>
-		            
-		          </ul>
+            <li><h4>&nbspУправление работами</h4></li>
+            <li class="active"><a href="adminka.php">Добавить работу</a></li>
+            <?php 
+
+              if ($_SESSION['user'][1]=='Admin')
+                {
+                  print'<li><a href="archive_vkr_works.php">Архив дипломных работ</a></li>
+                  <li><a href="archive_kurs_works.php">Архив курсовых работ</a></li>';
+                }
+
+             ?>
+            
+            
+          </ul>
+          
+           <?php 
+              
+              if ($_SESSION['user'][1]=='Admin')
+              {
+                print'<ul class="nav nav-sidebar">
+                <li><h4>&nbspУправление пользователями</h4></li>
+                <li><a href="create_users.php">Добавить пользователя</a></li>
+                <li><a href="list_users.php">Список пользователей</a></li>
+              </ul>';
+              }
+
+               ?>
 		          <?php 
-		          include("security/control.php");
-		          //session_start();
+		          
+		         
 		          if ($_SESSION['user']=='Admin')
 		          {
 		          	print'<ul class="nav nav-sidebar">
@@ -67,154 +99,63 @@
 				</div>
 				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 					<h3 class="page-header" align="center">Добавление работы</h3>
-					<div class="alert alert-info" align="center">Внимание! Заполните все необходимые поля, и проверте их достоверность. </div>	
-
+					
 
 					<div class="row placeholders ">
-					<?php if(!isset($_GET['open'])) exit; ?>
+					<?php if(!isset($_GET['type'])) exit; ?>
 
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<h3 class="panel-title">Шаблон 21.01.2016</h3>
+								<h3 class="panel-title">Внимание! Заполните все необходимые поля, и проверте их достоверность. </h3>
 							</div>
 							<div class="panel-body">
 								<div align="center">
 									<form action="" method="GET">
-										<div class="well well-lg">
-											
-
-<!-- <select class="form-control">
-<option value="0" style="background-color:#A88F8F;">Выберете кафедру</option>
-</select> -->
-											<!-- <input type="text" name="chair" class="form-control" placeholder="Кафедра программирования и автоматизации бизнес-процессов"> -->
-											<p align="center">Тема</p> 
-											<input type="text" name="subject" id="searchbox" class="form-control" placeholder="Разработка системы управления курсовыми и дипломными работами. ">
-											<div  align="center"> 
-
+										
+										<?php 
+										if(isset($_GET['type']))
+										{
+											$type = $_GET['type'];
+											switch ($type) {
+												case '1':
+													include('vkr.php');	
+													break;
 												
-												
-												
+												case '0':
+													include('course_work.php');	
+													break;
+											}
+										}
+										//include('vkr.php');	
 
-												<p align="center">Ф.И.О Исполнителя</p> 
-						
-											<select name="id_dep" class="form-control">
-											<option value="0" style="background-color:#A88F8F;">Исполнителя</option>
-<?php 
-	$connect= pg_connect("host=localhost port=5432 dbname=test_c user=postgres password=postgres");
-	$result_dep = pg_query($connect,"SELECT  *FROM vkr_works ");
-    while ($row_dep = pg_fetch_row($result_dep))
-    {
-      print '<option style ="background-color:#DDCECE;" value="'.$row_dep[0].'">';
-        print $row_dep[2];
-      print"</option>";
-    }
+										 ?>	
 
+										
+										<div class="form_submit" align="center">
+										  <div class="form-group">
+										    <label >Загрузка текстового файла работы</label>
+										    <input type="file" id="exampleInputFile">
 
- ?>
-
-</select>
-												
-
-												
-
-												<p align="center">Руководители</p> 
-												 <hr>
-												<p class="leftstr">Научный руководитель:</p>
-												<p class="rightstr">Нормаконтролер:</p>
-												<select name="head" class="form-control-smile">
-												<option value="0" style="background-color:#A88F8F;">Научный руководитель</option>
-<?php 
-$result_cod = pg_query($connect,"SELECT  *FROM ped_composition");
-    while ($row_cod = pg_fetch_row($result_cod))
-    {
-      print '<option style ="background-color:#DDCECE;" value="'.$row_cod[0].'">';
-        print $row_cod[1];
-      print"</option>";
-    }
-
-
- ?>		
-												</select>
-
-							<select name="normative" class="form-control-smile">
-												<option value="0" style="background-color:#A88F8F;">Нормаконтролер</option>
-<?php 
-$result_cod = pg_query($connect,"SELECT  *FROM ped_composition");
-    while ($row_cod = pg_fetch_row($result_cod))
-    {
-      print '<option style ="background-color:#DDCECE;" value="'.$row_cod[0].'">';
-        print $row_cod[1];
-      print"</option>";
-    }
-
-
- ?>		
-												</select>
-
-
-												
-
-												<p align="center">Консультант(ы):</p> 
-												<p class="leftstr">Ф.И.О</p>
-												<p class="rightstr">Ученая степень / ученое звание</p>
-<?php 
-for ($c=1; $c <= 4 ; $c++) 
-{ 
-	if($c==1) $check = 'checked'; else $check = '';
-print '
-<div>
-<label class="checkbox-inline">
-<input type="checkbox" id="radio-inline" '.$check.' name="s_cons_'.$c.'" >№'.$c.':
-</label>
-<input type="text" name="subject" id="searchbox" class="form-control-cons" placeholder="Консультант №'.$c.'. ">
-</div>';
-
-print'<input type="text" name="open" value="'.$_GET['open'].'" hidden="true" > ';
-
-}
- ?>
-	
-
-
-
-												<p align="center">Зав.Кафедрой:</p> 
-												<p class="leftstr">Ф.И.О</p>
-												<p class="rightstr">Ученая степень / ученое звание</p>
-												<div>
-													<select name="head_chair" class="form-control-cons">
-												<option value="0" style="background-color:#A88F8F;">Зав.Кафедрой</option>
-<?php 
-$result_cod = pg_query($connect,"SELECT  *FROM ped_composition");
-    while ($row_cod = pg_fetch_row($result_cod))
-    {
-      print '<option style ="background-color:#DDCECE;" value="'.$row_cod[0].'">';
-        print $row_cod[1];
-      print"</option>";
-    }
-
-
- ?>		
-												</select>
-												</div>
-
-												<p class="rightstr">Допущен(a) к защите</p>
-												<input type="text" name="date_def" id="datepicker-d-1" placeholder="Дата">
-
-												
-
-
-											</div>
-
-										</div>
-										<div class="form_submit">
+										  </div>
+										    <div class="form-group">
+										    <label for="exampleInputFile">Загрузка программного продукта работы</label>
+										    <input type="file" id="exampleInputFile">
+										    
+										  </div>
+										  <div class="form-group">
+										    <label for="exampleInputFile">Загрузка титултной страницы</label>
+										    <input type="file" id="exampleInputFile">
+										    
+										  </div>
 											<button type="submit" name="Save" class="btn btn-primary">Сохранить</button>
 											<button type="submit" name="Prewi" class="btn btn-default">Предварительный просмотр</button>
+
 										</div>
 									</form>
 								</div>
 
 
-							</div>
+							
 						</div>
 <?php 	
 
@@ -308,11 +249,7 @@ VALUES
 
 					</div>
 				</div>
-				<h2 class="sub-header">Section title</h2>
-				<div class="table-responsive">
-
-
-				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -320,8 +257,7 @@ VALUES
 
 
 		
-		<script src="bootstrap.min.js"></script>
-		<script src="docs.min.js"></script>
+		
 	</body>
 	</html>
 

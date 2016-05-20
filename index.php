@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="ru">
 <head>
 	<meta charset="utf-8">
 	<title>Выбор шаблона</title>
 	<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="bootstrap/css/dashboard.css" rel="stylesheet">
 
+
+
+ 
+  
 	<script type="text/javascript" src="js/jquery-1.12.1.js"></script>
 	<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
 	<script src="js/jquery-ui.js"></script>
@@ -13,6 +16,7 @@
 	
 	<link rel="stylesheet" href="css/jquery-ui.css">
 	<script src="js/modul/search.js"></script> 
+	<script src="sort/sort.js"></script> 
 
  
 	
@@ -20,7 +24,8 @@
 
 <body>
 
-	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -33,7 +38,7 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">Советы по проекту</a></li>
+					
 					<li><a href="modul/authorization.php">Управление</a></li>
 					<li><a href="#">Help</a></li>
 				</ul>
@@ -41,10 +46,11 @@
 		</div>
 	</div>
 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-3 col-md-2 sidebar">
-				<ul class="nav nav-sidebar">
+
+  <div class="container-fluid">
+    <div class="row">
+       <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
 					<li><h4>&nbspМетоды поиска</h4></li>
 
 					<?php 
@@ -82,30 +88,36 @@
 					
 
 				</ul>
-				<!-- <ul class="nav nav-sidebar">
-					<li><h4>&nbspУправление шаблонами</h4></li>
-					<li><a href="#">Создать</a></li>
-					<li><a href="#">Настроить шаблон работы</a></li>
-				
-				</ul> -->
+        </div>
 
-			</div>
-		</div>
-	</div><!-- Коонец Шапки  -->      
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h3 class="page-header" align="center">Поиск работ</h3> 
+          <p id="help_info">Возникли трудности?  <a href="modul/help.php">Прочтите инструкцию <span class="glyphicon glyphicon-exclamation-sign"></span></a> </p>
+          <!-- <div class="alert alert-info" align="center">Внимание! Заполните все необходимые поля, и проверте их достоверность. </div>   -->
+<!-- <script type="text/javascript">
+
+$( init );
+
+function init() {
+
+  // Удаляем содержимое #myDiv1 и #myDiv2
+  $('.result_div').empty();
+}
+
+</script> -->
+
+          <div class="row placeholders ">
 
 
-
-
-<div class="container" >
-	<div align="center"  >
 <?php
 if(isset($_GET['clear']))
 {
-	header( "Refresh:0; url=index.php?search_method=2.php", true, 303); 
+	//header( "Refresh:0; url=index.php?search_method=2.php", true, 303); 
 }
 if(!isset($_GET['search_method']))
 {
-	print'	
+	print'
+	<div align="center">	
 <form action="index.php" method="GET" >
 		 <h3 align="center">Выберете место поиска</h3><br> 
 		<div align="center">
@@ -117,20 +129,22 @@ if(!isset($_GET['search_method']))
 			</label>
 		</div><br>
 		 <h3 align="center">Выберете облать поиска по: </h3><br> 
-	 <select name="table" class="form-control-1">
-		 <option value="1" > Ключевым словам</option>
-		 <option value="2" > Дате</option>
-		 <option value="3" > Автору работы</option>
+	 <select name="object_search" class="form-control-1">
+		 <option value="1" > Названию работы</option>
+		 <option value="2" > Автору работы</option>
+		 <option value="3" > Дате</option>
 		 <option value="4" > Факультету </option>
 		 <option value="5" > Кафедре</option>
-		 <option value="6" > Названию темы</option>
 		 <option value="7" > Группе</option>
-		 <option value="8" > Персоналу ШГПУ</option>
+		 <option value="6" > Ф.И.О Консультанта</option>
+		 <option value="8" > Ф.И.О Нормаконтролера</option>
+		 <option value="8" > Ф.И.О Зав.кафедрой</option>
+		 
 	 </select> 
 	 <h3 align="center">Что искать</h3><br> 
 	 <input type="text" name="search" class="form-control-serch-1" placeholder="Поиск....." autocomplete="off">
 	 <input type="text" name="page" value="1" hidden="true">
- 		<button type="submit" class="search_button"><span class="glyphicon glyphicon-search"></span> Найти</button>							</form>';
+ 		<button type="submit" class="search_button"><span class="glyphicon glyphicon-search"></span> Найти</button>							</form></div>';
 
  	}else
 {
@@ -140,6 +154,13 @@ if(!isset($_GET['search_method']))
 	
 	case 1:
 	{
+
+
+
+
+  
+
+
 	print'
 			<h3 align="center">Вводите слова или фразы которые хотите найти</h3><br> 
 		<form action="index.php" method="GET" >
@@ -151,11 +172,14 @@ if(!isset($_GET['search_method']))
 		<div class="search_area" >
         <div id="search_advice_wrapper" ></div>
 			</div>
-        </form>
+        </form>';
 		
-		  
+		  if(isset($_GET['search']))
+		  {
+		  	print'<input type="text" name="search" value="'.$_GET['search'].'" hidden="true" id="sort_s">';
+		  }
 			
-		    <div class="search_result" align="center" ></div>';
+		    print'<div class="search_result" align="center" ></div>';
 
 
 	}
@@ -177,7 +201,7 @@ if(!isset($_GET['search_method']))
 	
 	<div class="tab-pane fade in active" id="tab-1">
 
-      <table class="table table-striped">';
+      <table class="table table-bordered">';
       $arrayRow = array('1' => 'Название работы', '2' => 'Автор работы',
      '3' => 'Дата создания', '4' => 'Нормаконтролер' , '4' => 'Консультант'
      , '5' => 'Зав.кафедрой', '6' => 'Научный руководитель', '7' => 'факультет',
@@ -196,11 +220,75 @@ if(!isset($_GET['search_method']))
 		      		if($i==3){
 		      			print'<input type="text" name="filter-n-1-'.$i.'" id="datepicker-d-1" placeholder="Дата">';
 		      		}else
-					print'<input type="text" name="filter-n-1-'.$i.'" placeholder="Вводите">';
+					print'<input type="text" name="filter-n-1-'.$i.'" placeholder="'.$arrayRow[$i].'">';
 
 	      
 		   		print'</td>';
+ 			print'<td></td>';
+      		print '<td>';
  			
+
+		     		 print '
+		      
+		     
+		      	<select name="filter-s-1-'.$i.'" >
+		      		<option value="1">Нет операции</option>
+					<option value="2">равно</option>
+					<option value="3">больше</option>
+					<option value="4">меньше</option>
+					<option value="4">начинается с</option>
+					<option value="4">включает в себя</option>
+					<option value="4">присутствует</option>
+					<option value="4">отсутствует</option>
+					
+				</select>
+		      <td>
+		   
+		     ';
+ 			
+ 				/*print '<td>';
+		      if($i==3){
+		      			print'<input type="text" name="filter-n-2-'.$i.'" id="datepicker-d2-1" placeholder="Дата">';
+		      		}else
+					print'<input type="text" name="filter-n-2-'.$i.'" placeholder="'.$arrayRow[$i].'">';
+
+		   		print'</td>';
+ 			*/
+ 			
+			
+      	
+      print '</tr>';
+      }
+      print'</table>
+
+	</div>
+	<div class="tab-pane fade " id="tab-2"><!-- 2 -TAB  -->
+		<table class="table table-bordered">';
+      $arrayRow = array('1' => 'Название работы', '2' => 'Автор работы',
+     '3' => 'Дата создания', '4' => 'Нормаконтролер' , '4' => 'Консультант'
+     , '5' => 'Зав.кафедрой', '6' => 'Научный руководитель', '7' => 'факультет',
+      '8' => 'Кафедра', '9' => 'Специальность' );
+
+      
+      for ($i=1; $i <= 9; $i++) 
+      { 
+		 print '<tr>';
+
+       
+      
+      		print '<td>';
+      		print $arrayRow[$i];
+      		print '</td>';
+
+		     		 print '<td>';
+		      		if($i==3){
+		      			print'<input type="text" name="filter-n-1-'.$i.'" id="datepicker-d-1" placeholder="Дата">';
+		      		}else
+					print'<input type="text" name="filter-n-1-'.$i.'" placeholder="'.$arrayRow[$i].'">';
+
+	      
+		   		print'</td>';
+ 			print'<td></td>';
       		print '<td>';
  			
 
@@ -218,69 +306,14 @@ if(!isset($_GET['search_method']))
 		   
 		     ';
  			
- 				print '<td>';
+ 				/*print '<td>';
 		      if($i==3){
 		      			print'<input type="text" name="filter-n-2-'.$i.'" id="datepicker-d2-1" placeholder="Дата">';
 		      		}else
-					print'<input type="text" name="filter-n-2-'.$i.'" >';
+					print'<input type="text" name="filter-n-2-'.$i.'" placeholder="'.$arrayRow[$i].'">';
 
-		   		print'</td>';
- 			
- 			
-			
-      	
-      print '</tr>';
-      }
-      print'</table>
 
-	</div>
-	<div class="tab-pane fade " id="tab-2"><!-- 2 -TAB  -->
-		<table class="table table-striped">';
-      $arrayRow = array('1' => 'Название работы', '2' => 'Автор работы',
-     '3' => 'Дата создания', '4' => 'Нормаконтролер' , '4' => 'Консультант'
-     , '5' => 'Зав.кафедрой', '6' => 'Научный руководитель', '7' => 'факультет',
-      '8' => 'Кафедра', '9' => 'Специальность' );
-      for ($i=1; $i <= 9; $i++) 
-      { 
-		 print '<tr>';
-       
-      		print '<td>';
-      		print $arrayRow[$i];
-      		print '</td>';
-
-		     		print '<td>';
-		      if($i==3){
-		      			print'<input type="text" name="filter-n-2-'.$i.'" id="datepicker-d-2" placeholder="Дата">';
-		      		}else
-					print'<input type="text" name="filter-n-2-'.$i.'" >';
-
-		   		print'</td>';
- 			
-
-		     		 print '
-		      <td>
-		     
-		      	<select name="filter-s-2-'.$i.'" >
-		      		<option value="1">Не выбранно</option>
-					<option value="2">И</option>
-					<option value="3">или</option>
-					<option value="4">с</option>
-					
-				</select>
-		      <td>
-		   
-		     ';
- 			
- 				print '<td>';
-		      if($i==3){
-		      			print'<input type="text" name="filter-n2-2-'.$i.'" id="datepicker-d2-2" placeholder="Дата">';
-		      		}else
-					print'<input type="text" name="filter-n-2-'.$i.'" >';
-
-		   		print'</td>';
- 			
- 			
-			
+		   		print'</td>';*/
  			
  			
 			
@@ -290,49 +323,37 @@ if(!isset($_GET['search_method']))
       print'</table>
 	</div>
 	<div class="tab-pane fade " id="tab-3"><!-- 1 -TAB  -->
-		<table class="table table-striped">';
-       $arrayRow = array('1' => 'Название работы', '2' => 'Автор работы',
+		<table class="table table-bordered">';
+      $arrayRow = array('1' => 'Название работы', '2' => 'Автор работы',
      '3' => 'Дата создания', '4' => 'Нормаконтролер' , '4' => 'Консультант'
      , '5' => 'Зав.кафедрой', '6' => 'Научный руководитель', '7' => 'факультет',
       '8' => 'Кафедра', '9' => 'Специальность' );
-       print '<td>';
-
-        $arrayName = array('0' => 'Название таблиц','1' => 'Параметр №1', '2' => 'Логическое выражение',
-     '3' => 'Параметр №2');
-        print '<tr>';
-        for ($b=0; $b <=3 ; $b++) 
-        { 
-        	print '<td>';
-      		print $arrayName[$b];
-      		print '</td>';
-        }
-        print '</tr>';
-       
       for ($i=1; $i <= 9; $i++) 
       { 
 		 print '<tr>';
+
        
-      		print '<tr>';
-       
+      
       		print '<td>';
       		print $arrayRow[$i];
       		print '</td>';
 
-		     		print '<td>';
-		      if($i==3){
-		      			print'<input type="text" name="filter-n-3-'.$i.'" id="datepicker-d-3" placeholder="Дата">';
+		     		 print '<td>';
+		      		if($i==3){
+		      			print'<input type="text" name="filter-n-1-'.$i.'" id="datepicker-d-1" placeholder="Дата">';
 		      		}else
-					print'<input type="text" name="filter-n-3-'.$i.'" >';
+					print'<input type="text" name="filter-n-1-'.$i.'" placeholder="'.$arrayRow[$i].'">';
 
+	      
 		   		print'</td>';
- 			
+ 			print'<td></td>';
       		print '<td>';
  			
 
 		     		 print '
 		      
 		     
-		      	<select name="filter-s-3-'.$i.'" >
+		      	<select name="filter-s-1-'.$i.'" >
 		      		<option value="1">Не выбранно</option>
 					<option value="2">И</option>
 					<option value="3">или</option>
@@ -343,13 +364,15 @@ if(!isset($_GET['search_method']))
 		   
 		     ';
  			
- 				print '<td>';
+ 				/*print '<td>';
 		      if($i==3){
-		      			print'<input type="text" name="filter-n2-3-'.$i.'" id="datepicker-d2-3" placeholder="Дата">';
+		      			print'<input type="text" name="filter-n-2-'.$i.'" id="datepicker-d2-1" placeholder="Дата">';
 		      		}else
-					print'<input type="text" name="filter-n-3-'.$i.'" >';
+					print'<input type="text" name="filter-n-2-'.$i.'" placeholder="'.$arrayRow[$i].'">';
+
 
 		   		print'</td>';
+ 			*/
  			
 			
       	
@@ -363,7 +386,7 @@ if(!isset($_GET['search_method']))
   </div><!-- /tab-content  -->
   <input type="text" name="page" value="1" hidden="true">
   <input type="text" name="search_method" value="2" hidden="true">
-  <input type="submit">
+  <input type="submit" value="Искать">
   <input type="submit" name="clear" value="Очистить">
   </form>
 </div>
@@ -382,6 +405,15 @@ if(!isset($_GET['search_method']))
 	{
 		if($_GET['search'] != '' AND $_GET['page']!='')
 		{
+			if (!isset($_GET['search_method'])) 
+			{
+				include('modul/function/search_method.php');
+			FuncSearch($_GET['search'],$_GET['page']);
+			}
+			else{
+
+
+			
 			$col=0;
 		$search = $_GET['search'];
 		$connect= pg_connect("host=localhost port=5432 dbname=test_c user=postgres password=postgres");
@@ -389,7 +421,7 @@ if(!isset($_GET['search_method']))
 		   		//print $row[1];$col=0;
 		while ($row2=pg_fetch_row($db_referal))
 		{	
-			$col;//$col Это кол-во записей в таблице.
+			 $col++;//$col Это кол-во записей в таблице.
 		}
 			if($col > 10)
 			{
@@ -410,10 +442,10 @@ if(!isset($_GET['search_method']))
 							print '<div class="result_div" align="center">';
 					print '<a href="modul/open.php?id='.$row[0].'"><h4 class="page-header" align="center">'.$row[2].'</h4></a>	';
 					//print' <h3 class="page-header" align="center">Добавление пользователя</h3>';
-					print '<p style="font-size: 17px;color:#160909;" align="left"><b>Автор:</b> '.$row[5].'</p>';
-					print '<p style="font-size: 17px;color:#160909;" align="left"><b>Кафедра:</b> '.$row[1].'</p>';
-					print '<p style="font-size: 17px;color:#160909;" align="left"><b>Группа:</b> '.$row[6].'</p>';
-					print '<p style="font-size: 17px;color:#160909;" align="left"><b>Год:</b> '.$row[18].'</p>';
+					print '<p align="center"><b>Автор:</b> '.$row[5].'</p>';
+					print '<p align="center"><b>Кафедра:</b> '.$row[1].'</p>';
+					print '<p align="center"><b>Группа:</b> '.$row[6].'</p>';
+					print '<p align="center"><b>Год:</b> '.$row[18].'</p>';
 					print '</div>';
 					print'</br>';
 							
@@ -447,17 +479,42 @@ if(!isset($_GET['search_method']))
 			}else//если меньше 10
 		   	{	
 				  	$search = $_GET['search'];
+				  	 $arrayFilter = array('1' => 'Название работы', '2' => 'Автор работы',
+								     '3' => 'Дата создания', '4' => 'Группа' , '5' => 'Нормаконтролер'
+								     , '6' => 'Зав.кафедрой', '7' => 'Научный руководитель', '8' => 'факультет',
+								      '9' => 'Кафедра', '10' => 'Специальность' );
 					$db_referal = pg_query($connect, "SELECT  *	FROM vkr_works where subject  ilike '%$search%' ");
 				   		//print $row[1];$col=0;
+					print '<h4 class="page-header" align="center">Сортировка </h4><br>';
+					print'<div class="filter">
+							  <div class="box"><form id="form">';
+							    for ($x=1; $x <=8 ; $x++) 
+							    { 
+							    	print'<div class="box-filter"><input type="button" name="n" class="but-1"
+							    	 value="'.$arrayFilter[$x].'"> <form> </div>';
+							    }
+							  print'</div>
+							</div><br>';
+					
+
+
+
+
 					print '<p class="page-header" align="center">Результатов: <b>'.$col.'</b> </p>';
+					print'<div class="a">';
 				while ($row2=pg_fetch_row($db_referal))
 				{	
+					$text=$row2[1]; 
+				 
+				  	//$text=str_replace($search,'<b style="color:yellow;">'.$search.'</b>',$text);
+				  	$text = preg_replace('('.$search.')iu','<b style="color:yellow;">'.$search.'</b>',$text).'<br>';
+					print'<div class="sort_result"></div>';
 					print '<div class="result_div" align="center">';
-					print '<a href="modul/open.php?id='.$row2[0].'"><h4 class="page-header" align="center">'.$row2[1].'</h4></a>	';
+					print '<a href="modul/open.php?id='.$row2[0].'"><h4 class="page-header" align="center">'.$text.'</h4></a>	';
 					//print' <h3 class="page-header" align="center">Добавление пользователя</h3>';
-					print '<p style="font-size: 17px;color:#160909;" align="left"><b>Автор:</b> '.$row2[2].'</p>';
-					print '<p style="font-size: 17px;color:#160909;" align="left"><b>Группа:</b> '.$row2[5].'</p>';
-					print '<p style="font-size: 17px;color:#160909;" align="left"><b>Год:</b> '.$row2[13].'</p>';
+					print '<p align="center"><b>Автор:</b> '.$row2[2].'</p>';
+					print '<p align="center"><b>Группа:</b> '.$row2[5].'</p>';
+					print '<p align="center"><b>Год:</b> '.$row2[13].'</p>';
 					print '<div align="right">
 					 
 					 <button type="submit" class="save_button"><span class="glyphicon glyphicon-save"></span> Скачать</button>
@@ -469,8 +526,13 @@ if(!isset($_GET['search_method']))
 					print'</br>';
 				}		
 		 	} 
+		  }
 		}
 	}	
+	
+
+	
+
 	?>
 	 <!-- <div class="tabs">
 	 			<ul class="nav nav-tabs nav-justified">
@@ -507,19 +569,16 @@ if(!isset($_GET['search_method']))
 	 	</div>
 	 </div> -->
      
-    
-
-  
-
-
-
-
+          
+<!-- ///////////////////////////////////////////////////////////////////////////////////////// -->    
+        </div>
+      </div>
+    </div>
 
 
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
 
-
-
-</body>
+  </body>
 </html>
-
-

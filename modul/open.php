@@ -26,7 +26,13 @@ id_template
     
     
     $mass_works = pg_fetch_row($result_works);// Запрос к выбраной работе
-	
+}  
+
+
+
+
+
+	/*
 		//print_r($mass_works);exit();
 	$result_tamplate = pg_query("SELECT * FROM templates WHERE id ='$mass_works[14]';");// Запрос к шаблону
 		$mass_tamplate=pg_fetch_row($result_tamplate);
@@ -143,7 +149,7 @@ else
 	print'<div class="alert alert-success"> <h1 align="center"> ERROR 402</h1>	</div>';
     header( "Refresh:2; url=adminka.php", true, 303); 
     exit;
-}	
+}	*/
 
 
 	/*$connect= pg_connect("host=localhost port=5432 dbname=sework user=postgres password=postgres");
@@ -156,7 +162,7 @@ else
   	$pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8');
 	$pdf->SetCreator(PDF_CREATOR);
 	$pdf->SetAuthor('Pavel Archenkov');
-	$pdf->SetTitle($mass_tamplate[1]);
+	$pdf->SetTitle( $mass_works[1]);
 	$pdf->SetSubject('TCPDF Tutorial');
 	$pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 	$pdf->setPrintHeader(false);
@@ -169,7 +175,10 @@ else
 	// $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 	// $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 	$pdf->AddPage();
-	$pdf->writeHTML($html, true, 0, true, 0);
+	$pdf->Image('../Photo/pdf.png', 10, 10, 210, 297, '', '', '', false, 300, '', false, false, 0);
+	
+	//$pdf->Image('../Photo/fone8.jpg', 85, 40, 85, 13, 'JPG', 'http://www.tcpdf.org', '', true, 150, '', false, false, 1, false, false, false);
+
 
 
 
