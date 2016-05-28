@@ -48,7 +48,8 @@
               if ($_SESSION['user'][1]=='Admin')
                 {
                   print'<li><a href="archive_vkr_works.php">Архив дипломных работ</a></li>
-                  <li><a href="archive_kurs_works.php">Архив курсовых работ</a></li>';
+                  <li><a href="archive_kurs_works.php">Архив курсовых работ</a></li>
+                  <li><a href="update.php">Проверить обновления</a></li>';
                 }
 
              ?>
